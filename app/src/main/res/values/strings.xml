@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">凭天意</string>
+    <string name="app_label">选择困难的福音</string>
+    <string name="ok_button_text">开始求签</string>
+    <string name="app_text_hint">输入待选择的项,再按加号</string>
+    <string name="app_clean">重置</string>
+</resources>

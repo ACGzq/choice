@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.administrator.choice.MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/ok"
+            android:textSize="21dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:background="@drawable/start_button_select"
+            android:text="@string/ok_button_text"/>
+        <Button
+            android:id="@+id/clean"
+            android:textSize="21dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:text="@string/app_clean"
+            android:background="@drawable/clean_button_select"/>
+    </LinearLayout>
+
+<RelativeLayout
+    android:layout_weight="7"
+    android:layout_width="match_parent"
+    android:layout_height="0dp">
+    <TextView
+    android:id="@+id/show_view"
+    android:text="test"
+    android:textSize="35dp"
+    android:textColor="@color/colorPrimaryDark"
+    android:gravity="center"
+    android:background="@drawable/timg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:visibility="gone"/>
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:visibility="visible" />
+
+</RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center">
+        <EditText
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:id="@+id/text"
+            android:hint="@string/app_text_hint"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/add"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/add_button_select"
+            android:text=""/>
+    </LinearLayout>
+</LinearLayout>
