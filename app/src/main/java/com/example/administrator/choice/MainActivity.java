@@ -1,21 +1,31 @@
 package com.example.administrator.choice;
 
+import android.content.Intent;
 import android.os.Handler;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import io.reactivex.internal.operators.observable.ObservableOnErrorNext;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public ListView listView;
@@ -31,11 +41,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int item_size;
     public boolean isRun;
     public boolean isStop;
-
+    public ActionBar mActionBar;
+    public View mShareView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mActionBar = getSupportActionBar();
+        mActionBar.setDisplayHomeAsUpEnabled(true);
         items = new ArrayList<>();
         mInflater = LayoutInflater.from(this);
         listView = findViewById(R.id.list_view);
@@ -110,6 +123,79 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
                 default:
 
+        }
+    }
+    private Intent getMyIntent() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "主题");
+        intent.putExtra(Intent.EXTRA_TEXT, "我的文字内容，zhangphil text");
+        return intent;
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main, menu);
+        //搜索框相关
+        MenuItem searchItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        //searchItem.setActionView(searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.d("choice:",query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.d("choice:",newText);
+                return true;
+            }
+        });
+        searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener(){
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                Log.d("choice:","onMenuItemActionExpand");
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                Log.d("choice:","onMenuItemActionExpand");
+                return true;
+            }
+        });
+        //分享菜单相关
+        MenuItem shareItem = menu.findItem(R.id.share);
+        ShareActionProvider shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
+        shareActionProvider.setShareIntent(getMyIntent());
+        //获取分享菜单的View
+        mShareView = shareActionProvider.onCreateActionView();
+
+        LinearLayout layout = (LinearLayout) findViewById(R.id.main_layout);
+        int wrap = android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+        //添加到布局中
+        layout.addView(mShareView, wrap, wrap);
+        return super.onCreateOptionsMenu(menu);
+    }
+    public boolean onOptionsItemSelected(MenuItem item){
+        Log.d("choice:","onOptionsItemSelected"+item.getTitle());
+        switch (item.getItemId()) {
+            case R.id.share:
+                Toast.makeText(getApplicationContext(), "分享", Toast.LENGTH_SHORT).show();
+
+                return true;
+
+            case R.id.setting:
+                Toast.makeText(getApplicationContext(), "设置", Toast.LENGTH_SHORT).show();
+
+                return true;
+            case R.id.about:
+                Toast.makeText(getApplicationContext(), "关于", Toast.LENGTH_SHORT).show();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
     public BaseAdapter getAdapter(){
